@@ -1,0 +1,108 @@
+---
+layout: post
+title:  "es6-四、正则表达式的扩展"
+date: 2016-12-21 5:56:00 +0800
+categories: jekyll es6
+---
+#### 1、RegExg构造函数 new RegExp()    
+*  RegExp构造函数的参数有两种情况    
+*  一、参数是字符串，这时第二个参数表示正则表达式的修饰符（flag）。     
+*  var regex = new RegExp('xyz', 'i'); == var regex = /xyz/i;    
+*  二、参数是一个正则表示式    
+*  var regex = new RegExp(/xyz/i); == var regex = /xyz/i;
+*  但是，ES5不允许此时使用第二个参数，添加修饰符。ES6可以
+{% highlight ruby %}
+new RegExp(/abc/ig, 'i').flags //Uncaught TypeError: Cannot supply flags when constructing one RegExp from another
+//es6 i
+{% endhighlight %}
+#### 2、字符串的正则方法    
+* match()、replace()、search()、split()         
+ES6将这4个方法，全部调用RegExp的实例方法，则所有与正则相关的方法，全都定义在RegExp对象上。
+#### 3、u修饰符    
+*  3.1、ES6对正则表达式添加了u修饰符，含义为“Unicode模式”。   
+点（.）字符在正则表达式中，含义是除了换行符以外的任意单个字符。对于码点大于0xFFFF的Unicode字符，点字符不能识别，必须加上u修饰符。     
+*  3.2、Unicode字符表示法
+{% highlight ruby %}
+/\u{61}/.test('a') // false
+/\u{61}/u.test('a') // true
+/\u{20BB7}/u.test('𠮷') // true    
+上面代码表示，如果不加u修饰符，正则表达式无法识别\u{61}这种表示法，只会认为这匹配61个连续的u。
+使用u修饰符后，所有量词都会正确识别码点大于0xFFFF的Unicode字符。
+/a{2}/.test('aa') // true
+/a{2}/u.test('aa') // true
+/𠮷{2}/.test('𠮷𠮷') // false
+/𠮷{2}/u.test('𠮷𠮷') // true
+//
+/^\u{3}$/.test('uuu') // true
+由于正则表达式没有u修饰符，所以大括号被解读为量词。加上u修饰符，就会被解读为Unicode表达式。
+{% endhighlight %}
+*  3.3、预定义模式 
+val = val.replace(/(^\s*)|(\s*$)/g, ""):去掉空格     
+\s匹配任何空白字符，包括空格、制表符、换页符等等。
+\S是预定义模式，匹配所有不是空格的字符。只有加了u修饰符，它才能正确匹配码点大于0xFFFF的Unicode字符。
+{% highlight ruby %}
+function codePointLength(text) {
+  var result = text.match(/[\s\S]/gu);
+  return result ? result.length : 0;
+}
+var s = '𠮷𠮷';
+s.length // 4
+codePointLength(s) // 2
+{% endhighlight %}
+*  3.4 i修饰符   
+有些Unicode字符的编码不同，但是字型很相近，比如，\u004B与\u212A都是大写的K。   
+/[a-z]/i.test('\u212A') // false   
+/[a-z]/iu.test('\u212A') // true      
+*  3.5 y修饰符
+y修饰符号隐含了头部匹配的标志^ 
+{% highlight ruby %} 
+/b/y.exec('aba') //null
+REGEX.lastIndex = 2;// 指定从2号位置开始匹配
+'#x#'.split(/#/y)// [ '', 'x#' ]
+const REGEX = /a/gy;
+'aaxa'.replace(REGEX, '-') // '--xa'
+{% endhighlight %}
+#### 4、y修饰符   
+除了u修饰符，ES6还为正则表达式添加了y修饰符，叫做“粘连”（sticky）修饰符。     
+y修饰符的作用与g修饰符类似，也是全局匹配，后一次匹配都从上一次匹配成功的下一个位置开始。不同之处在于，g修饰符只要剩余位置中存在匹配就可，而y修饰符确保匹配必须从剩余的第一个位置开始，这也就是“粘连”的涵义。      
+进一步说，y修饰符号隐含了头部匹配的标志^。      
+{% highlight ruby %}
+tokenize(TOKEN_Y, '3x + 4')
+// [ '3' ]
+tokenize(TOKEN_G, '3x + 4')
+// [ '3', '+', '4' ]
+//g修饰符会忽略非法字符，而y修饰符不会，这样就很容易发现错误。
+'a1a2a3'.match(/a\d/y) // ["a1"]
+'a1a2a3'.match(/a\d/gy) // ["a1", "a2", "a3"]
+{% endhighlight %}
+#### 5、sticky属性   
+与y修饰符相匹配，ES6的正则对象多了sticky属性，表示是否设置了y修饰符。  
+{% highlight ruby %}
+var r = /hello\d/y;
+r.sticky // true
+{% endhighlight %}
+#### 6、flags属性
+ES6为正则表达式新增了flags属性，会返回正则表达式的修饰符。       
+es5的source属性,返回正则表达式的正文:/abc/ig.source   // "abc"   
+ES6的flags属性,返回正则表达式的修饰符：/abc/ig.flags   // 'gi'   
+#### 7、RegExp.escape()   还没放入es7 ，没有同意将其列入ES7  
+字符串必须转义，才能作为正则模式。  
+{% highlight ruby %}
+function escapeRegExp(str) {  
+  return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');    
+}   
+let str = '/path/to/resource.html?search=query';    
+escapeRegExp(str)   
+str是一个正常字符串，必须使用反斜杠对其中的特殊字符转义，才能用来作为一个正则匹配的模式。
+{% endhighlight %}
+#### 8、s修饰符：dotAll 模式
+/foo.bar/.test('foo\nbar')  //false
+ 匹配的是任意单个字符，这时有一种变通的写法。
+/foo[^]bar/.test('foo\nbar')  // true  
+#### 9、unicode属性类（预案）
+**博客demo地址**： [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
+
+[jekyll-docs]: http://jekyllrb.com/docs/home
+[jekyll-gh]:   https://github.com/jekyll/jekyll
+[jekyll-talk]: https://talk.jekyllrb.com/
+

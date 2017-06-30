@@ -1,0 +1,118 @@
+.YK_interact_utilPanel_mox{
+   top:0px; 
+   left:0px;
+   position:absolute;
+    z-index:29999;
+   width:100%;
+   height:100%;
+   opacity:0.5;
+   filter:alpha(opacity=50); /*IE滤镜，透明度50%*/
+   -moz-opacity:0.5; /*Firefox私有，透明度50%*/
+   display:block;
+   background-color:rgb(84, 84, 84);
+}
+.YK_interact_utilPanel_pop{
+     /*display:none;*/
+     z-index:29999;
+     left:50%;
+     top:50%;
+     margin-left:-162px;
+     margin-top:-299px;
+     width:832px;
+     height:598px;
+     background:#fff;
+      text-align:center;
+     position:absolute;
+}
+.YK_interact_utilPanel_popHeader{
+    height:32px;
+    line-height:32px;
+    position:relative;
+    color:#909090;
+    background:#f3f3f3;
+    text-align:left;
+    text-indent:19px;
+    font-size:14px;
+}
+.YK_interact_utilPanel_Popclose{
+   position:absolute;
+   right:11px;
+   top:10px;
+   width:12px;
+   height:12px;
+   z-index:9;
+   cursor:pointer;
+   background:url(../../img/close-icon.png)  no-repeat;
+}
+.YK_interact_utilPanel_popContent{
+  height:485px;
+}
+.YK_interact_utilPanel_popBottom{
+  height:80x;
+  border-top:#eeeeee 1px solid;
+  text-align:center;
+}
+/*按钮样式*/
+.YK_interact_utilPanel_popBottom .YK_interact_utilPanelBtn{
+   margin-top:20px;
+}
+.YK_interact_utilPanelBtn{
+   display:inline-block;
+   height:38px;
+   line-height:38px;
+   font-size:14px;
+   color:#fff;
+   text-align:center;
+   width:102px;
+   background:#279ae4;
+   cursor:pointer;
+   border:1px solid #137ec9
+}
+.YK_interact_utilPanelBtn:hover{
+   backgrund:#30a5f0;
+   border:1px solid #2094e2;
+}
+.YK_interact_utilPanelBtn:active{
+   backgrund:#1e8cd6;
+   border:1px solid #137ec9;
+}
+.YK_interact_utilPanelBtn2{
+   display:inline-block;
+    height:28px;
+    line-height:28px;
+    color:#555555;
+    text-align:center;
+    width:78px;
+    font-size:13px;
+    cursor:pointer;
+    background:#f4f7fa;
+    border:1px solid #d1d1d1
+}
+.YK_interact_utilPanelBtn3{
+  display:inline-block;
+   height:38px;
+   line-height:38px;
+   font-size:14px;
+   text-align:center;
+   width:102px;
+   cursor:pointer;
+   background:#f4f7fa;
+   border:1px solid #d1d1d1;
+   color:#555555;
+}
+.YK_interact_utilPanelBtn3:hover{
+   background:#fff;
+}
+.YK_interact_utilPanelBtn3:active{
+   background:#eff2f5;
+   border:1px solid #d1d1d1;
+}
+.YK_interact_utilPanelBtn_save{
+  margin-right:20px;
+}
+.YK_interact_utilPanelBtn_save.CanNotSave{
+    background-color: #f2f2f2;
+    color:#bbbbbb;
+    cursor:default;
+    border:1px solid #e2e2e2
+}

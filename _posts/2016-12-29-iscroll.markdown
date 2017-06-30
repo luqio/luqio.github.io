@@ -1,0 +1,112 @@
+---
+layout: post
+title:  "iscroll使用总结"
+date: 2016-12-28 9:00:00 +0800
+categories: jekyll es6
+---
+#### 上传并裁剪图片组件 /assets/utilPanel
+#### 1、基本设置    
+iscroll5比iscroll4 更流畅;
+
+#### 2、iscroll5   
+wiki:http://wiki.jikexueyuan.com/project/iscroll-5/versions.html   
+改良后（app内嵌webview卡片）/assets/iscroll.js
+{% highlight ruby %}
+var myScroll = new IScroll('#YK_interact_h5_Card', 
+          {
+            startX: 0,
+            startY: 0,
+            scrollX: true,
+            scrollY: false, 
+            freeScroll: false,
+            directionLocked: "v",
+            eventPassthrough: true,
+            click: false,
+            preventDefault: false,
+            scrollbars: false,
+            bounceEasing: 'bound', 
+            bounceTime: 1200
+           });
+self.scroller = myScroll;
+self.scroller.on('scrollEnd', function(){
+self.onHold = false;
+self.scrollShowTracking();
+});
+self.scroller.on('beforeScrollStart', function(){
+self.onHold = true;
+});
+{% endhighlight %}
+#### 3、上拉刷新，下拉刷新 
+iscroll5下拉刷新：http://www.cnblogs.com/mrxia/p/3868126.html           
+iscroll4下拉刷新：http://www.wglong.com/index/demos/pullDownRefresh/cubiq-iscroll/index.html    
+{% highlight ruby %}
+new iScroll('rankDzContainer',{
+               useTransition: true,
+               bounce:true,
+               momentum:false,
+               vScrollbar:false,
+               topOffset:38,       
+               onRefresh:function(){ 
+                     if (pullDownElDz.hasClass('loading')) {
+                         pullDownElDz.removeClass('loading');
+                      } else if (pullUpElDz.hasClass('loading')) {
+                          pullUpElDz.removeClass('loading');
+                      }
+                    if (this.y > 5 && !pullDownElDz.hasClass('flip')) {
+                       pullDownElDz.removeClass('loading').addClass('flip');
+                       this.minScrollY = 0;
+                   }else if (this.y < 5 && pullDownElDz.hasClass('flip')){
+                       pullDownElDz.removeClass('loading');
+                       this.minScrollY = -38;
+                   }
+                   if(this.y<-38){
+                      if(that.$GiftRankDzWrap.find(".YK_interactRank_SelfRank.fixed").length==0){
+                        that.$GiftRankDzContainer.find(".YK_interactRank_SelfRank").clone()
+                                                                                   .appendTo("#rankDzWrap").addClass("fixed");
+                      }
+                   }else{
+                        that.$GiftRankDzWrap.find(".YK_interactRank_SelfRank.fixed").remove();
+                   }
+               },  
+               onScrollMove:function(){
+                   if (this.y > 5 && !pullDownElDz.hasClass('flip')) {
+                       pullDownElDz.removeClass('loading').addClass('flip');
+                       this.minScrollY = 0;
+                   }else if (this.y < 5 && pullDownElDz.hasClass('flip')){
+                       pullDownElDz.removeClass('loading');
+                       this.minScrollY = -38;
+                   }else if(that.DzcanUpLoad !=0){//¿ØÆ»ÓÊ¾Ýè¼Ìø
+                     if (this.y < (this.maxScrollY -5) && !pullUpElDz.hasClass('flip')) {
+                        pullUpElDz.removeClass('loading').addClass('flip');
+                        this.maxScrollY = this.maxScrollY;
+                     }else if (this.y > (this.maxScrollY + 5) && pullUpElDz.hasClass('flip')){
+                        pullUpElDz.removeClass('loading');
+                        this.maxScrollY = pullUpOffset;
+                     } 
+                   }
+                   if(this.y<-38){
+                      if(that.$GiftRankDzWrap.find(".YK_interactRank_SelfRank.fixed").length==0){
+                        that.$GiftRankDzContainer.find(".YK_interactRank_SelfRank").clone()
+                                                                                   .appendTo("#rankDzWrap").addClass("fixed");
+                      }
+                   }else{
+                        that.$GiftRankDzWrap.find(".YK_interactRank_SelfRank.fixed").remove();
+                   }
+               },
+               onScrollEnd:function(){
+                  if (pullDownElDz.hasClass('flip')) {
+                    pullDownElDz.removeClass('flip').addClass('loading');  
+                    that.getDzData();
+                  } else if (pullUpElDz.hasClass('flip')) {
+                    pullUpElDz.removeClass('flip').addClass('loading');
+                    that.DzdownAction()
+                  }
+               }                                                          
+            })    
+{% endhighlight %}
+**博客demo地址**： [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
+
+[jekyll-docs]: http://jekyllrb.com/docs/home
+[jekyll-gh]:   https://github.com/jekyll/jekyll
+[jekyll-talk]: https://talk.jekyllrb.com/
+

@@ -1,0 +1,179 @@
+div.YK_interact_imgUpLoad_popBox{
+   font-family:"微软雅黑";
+}
+form.YK_interact_imgfileUpLoadForm,form.YK_interact_imgfileCropForm{
+   cursor:pointer;
+   width: 100%;
+   height: 100%;
+   margin:0px;
+   padding:0px;
+   position:absolute;
+   left:0px;
+   top:0px;
+   z-index:2;
+}
+input.YK_interact_imgUpLoadInput[type="file"]{
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    margin:0px;
+   padding:0px;
+   display:block;
+   border:0px;
+    outline: medium none;
+    position: absolute;
+    z-index:2;
+    filter:alpha(opacity=0);
+    -moz-opacity:0;
+    opacity:0; 
+   /* font-size:0px;*/
+    left:0px;
+    top:0px;
+}
+input.YK_interact_imgUpLoadInput.forie[type="file"]{
+   font-size:30px;
+/*   left:-150px*/
+}
+input.YK_interact_imgUpLoadInput.forChrom[type="file"]{
+   font-size:0px;
+}
+.YK_interact_imgUpLoad_popBox .YK_interact_utilPanel_popContent{
+   padding:0px 73px;
+   position:relative;
+}
+.YK_interact_imgUpLoad_reSelect{
+   overflow:hidden;
+   padding-top:20px;
+}
+.YK_interact_utilPanelBtn_reSelect{
+  float:left;
+  position:relative;
+  overflow:hidden; 
+ margin-right:9px;
+}
+.YK_interact_imgUpLoad_reSelect span{
+   font-size:12px;
+   line-height:13px;
+   color:#868686;
+   float:left;
+   margin-top:17px;
+}
+
+.YK_interact_imgUpLoad_cropBox{
+   overflow:hidden;
+   margin-top:20px;
+   height:386px;
+   position:relative;
+}
+.YK_interact_imgUpLoad_uploaddingImg .YK_interact_imgUpLoad_uploading{
+   position:absolute;
+   top:263px;
+   left:270px;
+   margin:-33px 0px 0px -33px;
+   text-align:center;
+   z-index:9999;
+   color:#909090;
+   font-size:13px;
+   width:66px;
+   height:66px;
+   line-height:25px;
+}
+.YK_interact_imgUpLoad_uploaddingImg .YK_interact_imgUpLoad_uploading p{
+   margin:0px;
+   padding:0px;
+}
+.YK_interact_utilPanel_popContent.notNeedCrop  .YK_interact_imgUpLoad_uploaddingImg .YK_interact_imgUpLoad_uploading{
+   top:50%;
+   left:50%;
+   margin:-33px 0px 0px -33px;
+}
+/*失败 和 loading*/
+.YK_interact_utilPanelTipBox{
+   position:absolute;
+   width:100%;
+   height:100%;
+   top:0px;
+   left:0px;
+  z-index:999999;
+}
+.YK_interact_utilPanelTip{
+       position:absolute;
+   /*    width:126px;
+       height:55px;*/
+       padding:0px 15px;
+       text-align:center;
+       line-height:55px;
+       left:50%;
+       top:50%;
+       margin-left:-63px;
+       margin-top:-27px;
+       background:#fff;
+       font-size:14px;
+       color:#555;
+       box-shadow:0px 0px 5px #C6C6C6;
+   }
+.YK_interact_utilPanelTip span{
+   display:inline-block;
+}
+   .YK_interact_utilPanelTip i{
+       display:inline-block;
+       width:16px;
+       height:15px;
+       float:left;
+       margin-top:20px;
+       margin-right:5px;
+       background:url(../../img/worn_icon.png) 0px 0px no-repeat;
+    }
+     
+.YK_interact_imgUpLoad_upImgLoadingV2 .YK_interact_utilPanelTip i{
+     background:url(../../img/loading_64.gif) 0px 0px no-repeat;
+     background-size:100%;
+}
+/*--- fail loadding  end---*/
+/* 预览 区域*/
+.YK_interact_imgUpLoad_cropBox .YK_interact_imgUpLoad_preview-pane{
+   display:block;
+   position:absolute;
+   z-index:2000;
+   top:0;
+   left:445px; 
+   background-color:#f6f6f6;
+   border:1px solid #d3d3d3;
+}
+.YK_interact_imgUpLoad_preview-container{
+  overflow:hidden;
+  width:239px;
+ }
+/*左侧*/
+.YK_interact_ImgCrop_imgTargetBox.YK_interact_ImgCrop_holder{
+    height:384px;
+    width:384px;
+    float:left;
+    position:relative
+}
+.YK_interact_ImgCrop_imgTargetBox.YK_interact_ImgCrop_holder .YK_interact_ImgCrop_Targetmox{
+    display:block;
+    position:absolute;
+    left:0px;
+    top:0px;
+    width:100%;
+    height:100%;
+    z-index:0;
+    background:#f6f6f6;
+    border:1px solid #d3d3d3; 
+ /*
+    filter:alpha(opacity=50);
+    -moz-opacity:0.5;
+    opacity:0.5;*/
+}
+
+/*不需要裁剪*/
+.YK_interact_utilPanel_popContent.notNeedCrop .YK_interact_imgUpLoad_preview-pane{
+   display:none;
+}
+.YK_interact_utilPanel_popContent.notNeedCrop .YK_interact_ImgCrop_imgTargetBox{
+    line-height:386px;
+ }
+.YK_interact_utilPanel_popContent.notNeedCrop .YK_interact_ImgCrop_imgTargetBox img{
+   max-width:670px;
+}
